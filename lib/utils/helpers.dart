@@ -5,7 +5,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:notus/convert.dart';
+import 'package:notus/notus.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:quill_delta/quill_delta.dart';
+import 'package:markdown/markdown.dart' as markdown;
+import 'package:html2md/html2md.dart' as html2md;
 
 import '../config/palette.dart';
 import '../form/link_field2.dart';
@@ -331,4 +336,20 @@ void showSnackBar(String txt, context) {
       content: Text(txt),
     ),
   );
+}
+
+String convertToHtml(NotusDocument document) {
+  Delta _delta = document.toDelta();
+  String html =
+      markdown.markdownToHtml(notusMarkdown.encode(_delta).toString());
+  return html;
+}
+
+NotusDocument loadDocument([String data]) {
+  if (data == null) {
+    return NotusDocument();
+  }
+
+  var markdown = html2md.convert(data);
+  return NotusDocument.fromDelta(notusMarkdown.decode(markdown));
 }

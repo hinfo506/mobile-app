@@ -11,12 +11,14 @@ class EmailForm extends StatefulWidget {
   final String subject;
   final String raisedBy;
   final Function callback;
+  final bool isReply;
 
   EmailForm({
     @required this.doctype,
     @required this.doc,
     this.subject,
     this.raisedBy,
+    this.isReply = false,
     @required this.callback
   });
 
@@ -136,6 +138,13 @@ class _EmailFormState extends State<EmailForm> {
 
   @override
   Widget build(BuildContext context) {
+    var defaultSubject;
+    if(widget.isReply) {
+      defaultSubject = 'RE: ${widget.subject}';
+    } else {
+      defaultSubject = '${widget.doctype}: ${widget.subject} (${widget.doc})';
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Send Email'),
@@ -178,7 +187,7 @@ class _EmailFormState extends State<EmailForm> {
                 //   thickness: 2.0,
                 // ),
                 // subject
-                generateChildWidget(dummyData["fields"][4], '${widget.doctype}: ${widget.subject} (${widget.doc})'),
+                generateChildWidget(dummyData["fields"][4], defaultSubject),
                 // content
                 generateChildWidget(dummyData["fields"][5]),
                 Padding(

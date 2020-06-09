@@ -21,7 +21,7 @@ class Event extends StatelessWidget {
         break;
 
       case EventType.email:
-        val = EmailBox(data);
+        val = EmailBox(data, callback);
         break;
 
       case EventType.docVersion:

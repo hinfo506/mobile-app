@@ -176,7 +176,7 @@ class _FormViewState extends State<FormView>
                                     builder: (context) {
                                       return CommentInput(
                                         doctype: widget.doctype,
-                                        name: widget.name,
+                                        docName: widget.name,
                                         authorEmail:
                                             localStorage.getString('user'),
                                         callback: _refresh,

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:frappe_app/main.dart';
+import 'package:frappe_app/widgets/comment_input.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import '../config/palette.dart';
@@ -64,6 +65,19 @@ class _CommentBoxState extends State<CommentBox> {
               ],
             );
           });
+    } else if (choice == 'Edit') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return CommentInput(
+              commentName: widget.data["name"],
+              comment: widget.data["content"],
+              callback: widget.callback,
+            );
+          },
+        ),
+      );
     }
   }
 
@@ -84,6 +98,10 @@ class _CommentBoxState extends State<CommentBox> {
                     onSelected: _choiceAction,
                     itemBuilder: (context) {
                       return [
+                        PopupMenuItem(
+                          child: Text('Edit'),
+                          value: "Edit",
+                        ),
                         PopupMenuItem(
                           child: Text('Delete'),
                           value: "Delete",
